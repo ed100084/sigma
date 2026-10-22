@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>方案 A 概念稿 v2｜SIGMA 新格集團</title>
+<style>
+@font-face{font-family:'Barlow Condensed';font-weight:600;src:url('../../assets/fonts/barlow-600.woff2') format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-weight:700;src:url('../../assets/fonts/barlow-700.woff2') format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-weight:800;src:url('../../assets/fonts/barlow-800.woff2') format('woff2')}
+:root{
+ --ink:#0b1112;--ink-2:#121b1d;--ink-3:#1b2729;--line:rgba(255,255,255,.12);
+ --text:#e9eeea;--muted:#9aa8a3;--moss:#9fd18b;--moss-2:#5f9a4f;--molten:#ff6a2b;--molten-2:#ffb347;
+ --num:'Barlow Condensed',system-ui,sans-serif;
+ --sans:'Noto Sans TC','PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+ --ease:cubic-bezier(.2,.7,.1,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--text);font-family:var(--sans);line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+.ph{display:inline-block;font-size:11px;background:rgba(255,214,90,.14);border:1px solid rgba(255,214,90,.45);color:#ffd65a;padding:0 6px;margin-left:6px;vertical-align:middle;font-family:var(--sans);font-weight:500;letter-spacing:0}
+/* grain overlay */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;mix-blend-mode:overlay;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* progress bar */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--molten),var(--moss));z-index:60}
+/* header */
+header{position:fixed;inset:0 0 auto;z-index:40;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+header.solid{background:rgba(11,17,18,.72);backdrop-filter:blur(14px) saturate(1.4);border-color:var(--line)}
+header .wrap{display:flex;align-items:center;height:76px;gap:40px}
+.logo{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.08em}
+.logo i{width:34px;height:34px;display:grid;place-items:center;font-style:normal;font-family:var(--num);font-size:20px;background:linear-gradient(135deg,var(--molten),var(--molten-2));color:#111}
+nav{display:flex;gap:30px;margin-left:auto;font-size:14px}
+nav a{color:#c8d2ce;position:relative;padding:4px 0}
+nav a::after{content:'';position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--moss);transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
+nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.pill{border:1px solid rgba(159,209,139,.5);color:var(--moss);padding:9px 18px;border-radius:99px;font-size:14px;transition:.3s}
+.pill:hover{background:var(--moss);color:#0b1112}
+/* hero */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate}
+.hero .bg{position:absolute;inset:-6%;z-index:-3;background:url('../../assets/photos/melt-wide-1920.webp') center/cover;animation:kb 26s ease-in-out infinite alternate;filter:saturate(1.15) contrast(1.05)}
+@keyframes kb{from{transform:scale(1) translate(0,0)}to{transform:scale(1.12) translate(-2%,-2%)}}
+.hero::before{content:'';position:absolute;inset:0;z-index:-2;background:
+ radial-gradient(60% 60% at 78% 70%,rgba(255,106,43,.35),transparent 60%),
+ linear-gradient(180deg,rgba(11,17,18,.55) 0%,rgba(11,17,18,.35) 40%,rgba(11,17,18,.96) 100%),
+ linear-gradient(90deg,rgba(11,17,18,.92) 0%,rgba(11,17,18,.2) 70%)}
+.glow{position:absolute;z-index:-1;width:46vw;height:46vw;right:-8vw;bottom:-14vw;border-radius:50%;
+ background:radial-gradient(circle,rgba(255,140,60,.55),rgba(255,90,30,.12) 45%,transparent 70%);filter:blur(30px);animation:pulse 6s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.12);opacity:.75}}
+.sparks span{position:absolute;bottom:-10px;width:3px;height:3px;border-radius:50%;background:var(--molten-2);box-shadow:0 0 8px 2px rgba(255,140,60,.8);animation:rise linear infinite;opacity:0;z-index:-1}
+@keyframes rise{0%{opacity:0;transform:translate(0,0)}10%{opacity:1}100%{opacity:0;transform:translate(var(--dx),-90vh)}}
+.hero .wrap{width:100%;padding-bottom:40px}
+.eyebrow{font-family:var(--num);letter-spacing:.32em;font-size:14px;color:var(--moss);display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:'';width:40px;height:1px;background:var(--moss)}
+h1{font-size:clamp(48px,8.4vw,128px);line-height:1.02;margin:22px 0 28px;font-weight:900;letter-spacing:-.01em}
+h1 .line{display:block;overflow:hidden;padding-bottom:.06em}
+h1 .line > span{display:inline-block;transform:translateY(110%);animation:up 1.1s var(--ease) forwards}
+h1 .line:nth-child(2) > span{animation-delay:.15s}
+@keyframes up{to{transform:none}}
+.grad{background:linear-gradient(100deg,var(--molten-2) 0%,var(--molten) 35%,#d9e8c8 65%,var(--moss) 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shift 8s ease-in-out infinite alternate}
+@keyframes shift{to{background-position:100% 0}}
+.hero-row{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:end}
+.lead{font-size:19px;color:#cdd6d2;max-width:32em;margin:0;opacity:0;animation:fade 1s .6s forwards}
+@keyframes fade{to{opacity:1}}
+.btns{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;opacity:0;animation:fade 1s .8s forwards}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 26px;font-size:15px;border-radius:99px;transition:.35s var(--ease)}
+.btn.hot{background:linear-gradient(135deg,var(--molten),#ff8a3d);color:#140a04;font-weight:700;box-shadow:0 10px 40px -10px rgba(255,106,43,.7)}
+.btn.hot:hover{transform:translateY(-2px);box-shadow:0 18px 50px -10px rgba(255,106,43,.9)}
+.btn.glass{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.06);backdrop-filter:blur(8px)}
+.btn.glass:hover{background:rgba(255,255,255,.14)}
+.ticker{border:1px solid var(--line);background:rgba(11,17,18,.55);backdrop-filter:blur(16px);padding:26px 30px;border-radius:18px;opacity:0;animation:fade 1s 1s forwards}
+.ticker .k{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.ticker .k::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--moss);box-shadow:0 0 0 0 rgba(159,209,139,.7);animation:ping 1.6s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(159,209,139,0)}100%{box-shadow:0 0 0 0 rgba(159,209,139,0)}}
+.ticker .v{font-family:var(--num);font-size:64px;font-weight:700;line-height:1.05;margin-top:6px;font-variant-numeric:tabular-nums}
+.ticker .v small{font-size:20px;color:var(--muted);margin-left:6px;font-family:var(--sans);font-weight:400}
+.ticker p{margin:6px 0 0;font-size:12px;color:var(--muted)}
+.scroll-hint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);font-size:11px;letter-spacing:.3em;color:var(--muted);font-family:var(--num)}
+.scroll-hint::after{content:'';display:block;width:1px;height:34px;margin:8px auto 0;background:linear-gradient(var(--moss),transparent);animation:drip 2s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+/* marquee */
+.marquee{border-block:1px solid var(--line);overflow:hidden;background:var(--ink-2)}
+.marquee .track{display:flex;gap:64px;width:max-content;padding:22px 0;animation:mq 38s linear infinite;font-family:var(--num);font-size:22px;letter-spacing:.14em;color:#7f8c88;white-space:nowrap}
+.marquee b{color:var(--text);font-weight:700}
+.marquee .dot{color:var(--molten)}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* section basics */
+section{position:relative;padding:150px 0}
+.kicker{font-family:var(--num);letter-spacing:.3em;font-size:14px;color:var(--moss)}
+h2{font-size:clamp(36px,5vw,72px);line-height:1.1;margin:18px 0 22px;font-weight:900;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:18px;max-width:36em}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+/* 95% */
+.giant{display:grid;grid-template-columns:auto 1fr;gap:60px;align-items:center}
+.giant .num{font-family:var(--num);font-weight:800;font-size:clamp(160px,26vw,380px);line-height:.8;letter-spacing:-.02em;
+ -webkit-text-stroke:2px rgba(159,209,139,.55);color:transparent;position:relative}
+.giant .num span{position:absolute;inset:0;color:var(--moss);clip-path:inset(100% 0 0 0);transition:clip-path 2.2s var(--ease)}
+.giant.in .num span{clip-path:inset(0 0 0 0)}
+.giant .num sup{font-size:.35em;vertical-align:top}
+.compare{margin-top:36px;display:grid;gap:18px}
+.compare .row{display:grid;grid-template-columns:110px 1fr 70px;gap:16px;align-items:center;font-size:15px}
+.compare .bar{height:10px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.compare .bar i{display:block;height:100%;width:0;border-radius:99px;transition:width 1.8s var(--ease)}
+.compare .row:first-child .bar i{background:linear-gradient(90deg,#6c7472,#9aa19f)}
+.compare .row:last-child .bar i{background:linear-gradient(90deg,var(--moss-2),var(--moss))}
+.giant.in .compare .row:first-child .bar i{width:100%}
+.giant.in .compare .row:last-child .bar i{width:5%}
+.compare b{font-family:var(--num);font-size:24px;text-align:right}
+/* loop: sticky story */
+.story{background:var(--ink-2)}
+.story .grid{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.ring-wrap{position:sticky;top:12vh;height:76vh;display:grid;place-items:center}
+.ring{width:min(36vw,500px);aspect-ratio:1;position:relative}
+.ring svg{width:100%;height:100%;overflow:visible}
+.ring .base{fill:none;stroke:rgba(255,255,255,.08);stroke-width:2}
+.ring .prog{fill:none;stroke:url(#rg);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .8s var(--ease);transform:rotate(-90deg);transform-origin:center}
+.ring .spin{fill:none;stroke:rgba(159,209,139,.25);stroke-width:1;stroke-dasharray:2 10;animation:spin 40s linear infinite;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ring .node{fill:var(--ink-2);stroke:rgba(255,255,255,.25);stroke-width:2;transition:.5s}
+.ring .node.on{fill:var(--moss);stroke:var(--moss);filter:drop-shadow(0 0 10px rgba(159,209,139,.9))}
+.ring .center{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring .center .n{font-family:var(--num);font-size:110px;font-weight:800;line-height:1;color:var(--text)}
+.ring .center .t{font-size:20px;font-weight:700;color:var(--moss)}
+.steps{padding:12vh 0}
+.step{min-height:62vh;display:flex;flex-direction:column;justify-content:center;opacity:.25;transition:opacity .6s}
+.step.on{opacity:1}
+.step .no{font-family:var(--num);color:var(--molten);letter-spacing:.2em}
+.step h3{font-size:44px;margin:8px 0 12px;font-weight:900}
+.step p{color:var(--muted);font-size:18px;max-width:26em;margin:0}
+/* proof bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(220px,auto);gap:18px;margin-top:60px}
+.tile{position:relative;border:1px solid var(--line);border-radius:22px;padding:34px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.01));overflow:hidden;transition:border-color .4s,transform .4s var(--ease)}
+.tile:hover{border-color:rgba(159,209,139,.5);transform:translateY(-4px)}
+.tile::before{content:'';position:absolute;inset:auto -30% -60% auto;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(159,209,139,.18),transparent 65%);transition:.6s}
+.tile:hover::before{transform:scale(1.3)}
+.tile .big{font-family:var(--num);font-size:88px;font-weight:800;line-height:1}
+.tile .big small{font-size:22px;color:var(--muted);font-family:var(--sans);font-weight:400;margin-left:6px}
+.tile h3{font-size:20px;margin:14px 0 6px}
+.tile p{color:var(--muted);margin:0;font-size:15px}
+.t1{grid-column:span 3;grid-row:span 2;display:flex;flex-direction:column;justify-content:flex-end;
+ background:linear-gradient(180deg,rgba(11,17,18,.1),rgba(11,17,18,.9)),url('../../assets/photos/inspect-card-1200.webp') center/cover}
+.t2,.t3{grid-column:span 3}
+.t4{grid-column:span 2}.t5{grid-column:span 2}.t6{grid-column:span 2}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chips span{border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:13px;color:#cdd6d2;background:rgba(255,255,255,.04)}
+.brands{display:flex;gap:10px;margin-top:6px}
+.brands b{font-family:var(--num);font-size:30px;border:1px solid rgba(255,255,255,.35);padding:2px 14px;letter-spacing:.06em}
+/* products */
+.prods{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:60px}
+.prod{position:relative;aspect-ratio:3/4;border-radius:22px;overflow:hidden;isolation:isolate;transform-style:preserve-3d;transition:transform .5s var(--ease)}
+.prod img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.2s var(--ease),filter .6s;filter:grayscale(.5) brightness(.75)}
+.prod::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 30%,rgba(11,17,18,.95))}
+.prod:hover img{transform:scale(1.08);filter:grayscale(0) brightness(.9)}
+.prod .in{position:absolute;inset:auto 0 0 0;padding:28px}
+.prod .tag{font-family:var(--num);letter-spacing:.12em;color:var(--moss);font-size:14px}
+.prod h3{font-size:26px;margin:6px 0 6px}
+.prod p{margin:0;font-size:14px;color:#c0cbc7;max-height:0;opacity:0;overflow:hidden;transition:.6s var(--ease)}
+.prod:hover p{max-height:80px;opacity:1}
+.prod .arrow{position:absolute;top:22px;right:22px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.4);display:grid;place-items:center;transition:.4s}
+.prod:hover .arrow{background:var(--molten);border-color:var(--molten);transform:rotate(-45deg)}
+/* network */
+.network{background:radial-gradient(80% 60% at 70% 40%,rgba(95,154,79,.14),transparent 70%),var(--ink)}
+.map{margin-top:50px;border:1px solid var(--line);border-radius:26px;padding:20px;background:rgba(255,255,255,.02)}
+.map svg{width:100%;height:auto;display:block}
+.map .grid circle{fill:rgba(255,255,255,.09)}
+.map .arc{fill:none;stroke:url(#ag);stroke-width:1.4;stroke-dasharray:600;stroke-dashoffset:600}
+.network.in .arc{animation:draw 2.6s var(--ease) forwards}
+.network.in .arc:nth-of-type(2){animation-delay:.4s}.network.in .arc:nth-of-type(3){animation-delay:.8s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.map .pt{fill:var(--molten)}
+.map .pt.base{fill:var(--moss)}
+.map .halo{fill:none;stroke:var(--moss);animation:halo 2.4s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes halo{from{transform:scale(1);opacity:.9}to{transform:scale(4);opacity:0}}
+.map text{fill:#cdd6d2;font-size:9px;font-family:var(--sans)}
+.legend{display:flex;gap:26px;margin-top:18px;font-size:14px;color:var(--muted)}
+.legend span::before{content:'';display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;background:var(--molten)}
+.legend span.b::before{background:var(--moss)}
+/* split */
+.duo{display:grid;grid-template-columns:1fr 1fr;min-height:70vh}
+.duo a{position:relative;padding:90px 60px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate}
+.duo a::before{content:'';position:absolute;inset:0;z-index:-1;transition:transform 1.2s var(--ease);background-size:cover;background-position:center}
+.duo .buy::before{background-image:linear-gradient(180deg,rgba(11,17,18,.3),rgba(11,17,18,.95)),url('../../assets/photos/ingots-wide-960.webp')}
+.duo .sell::before{background-image:linear-gradient(180deg,rgba(30,52,26,.35),rgba(17,33,15,.95)),url('../../assets/photos/recycling-wide-960.webp')}
+.duo a:hover::before{transform:scale(1.06)}
+.duo .who{font-family:var(--num);letter-spacing:.3em;color:var(--moss);font-size:14px}
+.duo .buy .who{color:var(--molten-2)}
+.duo h3{font-size:clamp(34px,4vw,56px);margin:10px 0 14px;font-weight:900;line-height:1.1}
+.duo p{color:#c7d0cc;max-width:28em;margin:0}
+.duo .go{margin-top:28px;display:inline-flex;align-items:center;gap:12px;font-weight:700}
+.duo .go i{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-style:normal;border:1px solid rgba(255,255,255,.5);transition:.4s}
+.duo a:hover .go i{background:#fff;color:#111;transform:translateX(6px)}
+/* finale */
+.finale{text-align:center;padding:170px 0;background:radial-gradient(50% 70% at 50% 100%,rgba(255,106,43,.25),transparent 70%),var(--ink)}
+.finale h2{font-size:clamp(44px,7vw,110px)}
+.finale .btn{margin-top:20px}
+footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media (max-width:960px){
+ nav{display:none}
+ .hero-row,.giant,.story .grid,.duo{grid-template-columns:1fr}
+ .ring-wrap{position:relative;height:auto;top:0}.ring{width:80vw}
+ .steps{padding:0}.step{min-height:auto;padding:40px 0;opacity:1}
+ .bento{grid-template-columns:1fr}.tile{grid-column:auto!important;grid-row:auto!important;min-height:220px}
+ .prods{grid-template-columns:1fr 1fr}
+ .wrap{padding:0 22px}
+}
+@media (prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important}
+ h1 .line>span,.lead,.btns,.ticker{transform:none;opacity:1}
+ .reveal{opacity:1;transform:none}
+ .giant .num span{clip-path:none}
+ .map .arc{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header id="hdr"><div class="wrap">
+ <a class="logo" href="#"><i>S</i>SIGMA 新格</a>
+ <nav><a href="#loop">循環與減碳</a><a href="#proof">品質與認證</a><a href="#products">產品與規格</a><a href="#network">全球網路</a><a href="#duo">原料收購</a></nav>
+ <a class="pill" href="#finale">索取碳足跡資料</a>
+</div></header>
+
+<section class="hero" style="padding:0">
+ <div class="bg"></div><div class="glow"></div>
+ <div class="sparks" id="sparks" aria-hidden="true"></div>
+ <div class="wrap">
+  <p class="eyebrow">LOW-CARBON RECYCLED ALUMINIUM · SINCE 1978</p>
+  <h1><span class="line"><span>同樣的鋁，</span></span><span class="line"><span class="grad">少 95% 的能源。</span></span></h1>
+  <div class="hero-row">
+   <div>
+    <p class="lead">新格把城市裡的廢金屬，熔鑄為汽車與家電級鋁合金。協助品牌與零件廠降低產品碳足跡，同時不犧牲任何一項規格。</p>
+    <div class="btns"><a class="btn hot" href="#finale">索取產品碳足跡資料 →</a><a class="btn glass" href="#products">查看合金規格</a></div>
+   </div>
+   <div class="ticker" aria-live="off">
+    <div class="k">自你開啟本頁，新格已回收廢金屬</div>
+    <div class="v"><span id="live">0.0</span><small>公斤</small></div>
+    <p>依年回收 30 萬噸換算的即時估計<span class="ph">待確認</span></p>
+   </div>
+  </div>
+ </div>
+ <div class="scroll-hint">SCROLL</div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div class="track">
+ <span><b>IATF 16949</b></span><span class="dot">●</span><span><b>ISO 14001</b></span><span class="dot">●</span><span><b>ISO 50001</b></span><span class="dot">●</span><span><b>ISO 14021</b></span><span class="dot">●</span><span>LME <b>SBI · SIGMA · ZSM</b></span><span class="dot">●</span><span><b>ISRI</b> · <b>BIR</b> MEMBER</span><span class="dot">●</span><span>RECYCLING FOR A <b>BETTER TOMORROW</b></span><span class="dot">●</span>
+ <span><b>IATF 16949</b></span><span class="dot">●</span><span><b>ISO 14001</b></span><span class="dot">●</span><span><b>ISO 50001</b></span><span class="dot">●</span><span><b>ISO 14021</b></span><span class="dot">●</span><span>LME <b>SBI · SIGMA · ZSM</b></span><span class="dot">●</span><span><b>ISRI</b> · <b>BIR</b> MEMBER</span><span class="dot">●</span><span>RECYCLING FOR A <b>BETTER TOMORROW</b></span><span class="dot">●</span>
+</div></div>
+
+<section>
+ <div class="wrap giant reveal" id="giant">
+  <div class="num" aria-label="95%">95<sup>%</sup><span aria-hidden="true">95<sup>%</sup></span></div>
+  <div>
+   <p class="kicker">01 / WHY RECYCLED</p>
+   <h2>省下的能源，<br>就是少排的碳。</h2>
+   <p class="sub">鋁可以無限次循環而不損失性能。再生鋁的生產能耗不到原鋁的 5%，是製造業最直接的減碳選項。</p>
+   <div class="compare">
+    <div class="row"><span>原鋁</span><span class="bar"><i></i></span><b>100%</b></div>
+    <div class="row"><span>新格再生鋁</span><span class="bar"><i></i></span><b>&lt;5%</b></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="story" id="loop">
+ <div class="wrap grid">
+  <div class="ring-wrap">
+   <div class="ring">
+    <svg viewBox="-200 -200 400 400" aria-hidden="true">
+     <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6a2b"/><stop offset="1" stop-color="#9fd18b"/></linearGradient></defs>
+     <circle class="spin" r="186"/>
+     <circle class="base" r="160"/>
+     <circle class="prog" id="prog" r="160" stroke-dasharray="1005.3" stroke-dashoffset="1005.3"/>
+     <g id="nodes"></g>
+    </svg>
+    <div class="center"><div class="n" id="ringN">01</div><div class="t" id="ringT">全球回收</div></div>
+   </div>
+  </div>
+  <div class="steps">
+   <p class="kicker">02 / CLOSED LOOP</p>
+   <h2>從城市礦山，<br>回到你的產品裡。</h2>
+   <div class="step" data-t="全球回收"><span class="no">STEP 01</span><h3>全球回收</h3><p>依 ISRI 標準採購北美、歐洲與在地廢鋁，每年超過 30 萬噸，來源可追溯。</p></div>
+   <div class="step" data-t="精密分選"><span class="no">STEP 02</span><h3>精密分選</h3><p>破碎、重介質浮選、磁選與脫漆，從源頭把雜質擋在爐外。</p></div>
+   <div class="step" data-t="熔煉精煉"><span class="no">STEP 03</span><h3>熔煉精煉</h3><p>永磁攪拌與熱交換節能技術；每一爐檢驗成分、金相、含氣量與含渣量。</p></div>
+   <div class="step" data-t="錠／鋁液交付"><span class="no">STEP 04</span><h3>錠或鋁液交付</h3><p>以高溫鋁液直供，客戶免重熔，省下第二次熔化的能源與碳排。</p></div>
+   <div class="step" data-t="再次循環"><span class="no">STEP 05</span><h3>再次循環</h3><p>產品報廢後回到新格，鋁沒有終點，只有下一次開始。</p></div>
+  </div>
+ </div>
+</section>
+
+<section id="proof">
+ <div class="wrap">
+  <p class="kicker reveal">03 / PROOF, NOT PROMISES</p>
+  <h2 class="reveal d1">環保，要拿得出數據。</h2>
+  <p class="sub reveal d2">採購與 ESG 團隊需要的是能放進報告的數字與文件，而不是口號。</p>
+  <div class="bento">
+   <article class="tile t1 reveal"><div class="big" data-count="1978">1978</div><h3>四十多年的金屬循環經驗</h3><p>從紐澤西的廢金屬貿易起步，到中國第一家在 LME 註冊的再生鋁廠。</p></article>
+   <article class="tile t2 reveal d1"><div class="big">X.X<small>tCO₂e／噸</small></div><h3>產品碳足跡<span class="ph">待確認</span></h3><p>依 ISO 14067 計算主要牌號碳足跡，可提供第三方查證報告。</p></article>
+   <article class="tile t3 reveal d2"><div class="big">XX<small>% 再生料</small></div><h3>再生料含量宣告<span class="ph">待確認</span></h3><p>依 ISO 14021 宣告，可逐批出具證明。</p></article>
+   <article class="tile t4 reveal"><h3>國際體系認證</h3><div class="chips"><span>IATF 16949</span><span>ISO 9001</span><span>ISO 14001</span><span>ISO 45001</span><span>ISO 50001</span><span>ISO 14021</span></div></article>
+   <article class="tile t5 reveal d1"><h3>LME 註冊品牌</h3><div class="brands"><b>SBI</b><b>SIGMA</b><b>ZSM</b></div><p style="margin-top:12px">可在倫敦金屬交易所交割的二次鋁合金。</p></article>
+   <article class="tile t6 reveal d2"><div class="big" data-count="100">100<small>種+</small></div><h3>合金規格</h3><p>每一爐都檢驗，品管團隊提供免費技術諮詢。</p></article>
+  </div>
+ </div>
+</section>
+
+<section id="products" style="padding-top:40px">
+ <div class="wrap">
+  <p class="kicker reveal">04 / PRODUCTS</p>
+  <h2 class="reveal d1">低碳，也要合規格。</h2>
+  <div class="prods">
+   <a class="prod reveal" href="#"><img src="../../assets/photos/ingots-card-1200.webp" alt=""><span class="arrow">→</span><div class="in"><span class="tag">ADC 3 · 6 · 10 · 12 · 14</span><h3>壓鑄鋁合金錠</h3><p>汽機車零件、3C 外殼與家電。附成分表與規格書下載。</p></div></a>
+   <a class="prod reveal d1" href="#"><img src="../../assets/photos/melt-card-1200.webp" alt=""><span class="arrow">→</span><div class="in"><span class="tag">LIQUID ALUMINIUM</span><h3>鋁液直供</h3><p>高溫鋁液直送壓鑄廠，免重熔，再省一次能源與碳排。</p></div></a>
+   <a class="prod reveal d2" href="#"><img src="../../assets/photos/coils-card-1200.webp" alt=""><span class="arrow">→</span><div class="in"><span class="tag">3104 · 5182 · 6063</span><h3>變形鋁合金</h3><p>易開罐、板帶與型材的再生原料，實現保級循環。</p></div></a>
+   <a class="prod reveal d3" href="#"><img src="../../assets/photos/diecast-card-1200.webp" alt=""><span class="arrow">→</span><div class="in"><span class="tag">ZAMAK-3 · 5 · ZSG-3</span><h3>鋅合金錠</h3><p>五金、衛浴與精密壓鑄件。</p></div></a>
+  </div>
+ </div>
+</section>
+
+<section class="network" id="network">
+ <div class="wrap">
+  <p class="kicker reveal">05 / NETWORK</p>
+  <h2 class="reveal d1">北美收料，亞洲熔鑄。</h2>
+  <p class="sub reveal d2">美國與日本據點負責全球廢料採購，高雄與浙江兩大基地就近供應亞洲製造業。</p>
+  <div class="map reveal">
+   <svg viewBox="240 70 690 160" role="img" aria-label="新格全球據點示意圖">
+    <defs><linearGradient id="ag" x1="0" x2="1"><stop offset="0" stop-color="#ff6a2b"/><stop offset="1" stop-color="#9fd18b"/></linearGradient></defs>
+    <g class="grid" id="dots"></g>
+    <path class="arc" d="M294 137 Q560 30 834 187"/>
+    <path class="arc" d="M294 137 Q560 20 836 164"/>
+    <path class="arc" d="M888 150 Q870 135 836 164"/>
+    <circle class="halo" cx="834" cy="187" r="4"/><circle class="halo" cx="836" cy="164" r="4"/>
+    <circle class="pt" cx="294" cy="137" r="3.5"/><text x="300" y="133">美國 · 紐約</text>
+    <circle class="pt" cx="888" cy="150" r="3"/><text x="894" y="148">日本</text>
+    <circle class="pt base" cx="836" cy="164" r="4"/><text x="760" y="160">浙江 · 嘉善</text>
+    <circle class="pt base" cx="834" cy="187" r="4"/><text x="842" y="196">臺灣 · 高雄</text>
+    <circle class="pt" cx="827" cy="182" r="2.2"/><circle class="pt" cx="816" cy="186" r="2.2"/><text x="770" y="204">漳州 · 東莞</text>
+   </svg>
+  </div>
+  <div class="legend"><span class="b">生產基地</span><span>業務／採購據點</span></div>
+ </div>
+</section>
+
+<div class="duo" id="duo">
+ <a class="buy" href="#finale"><span class="who">FOR BUYERS</span><h3>需要低碳合金？</h3><p>告訴我們牌號、月需求量與交貨地，業務會附上規格書與碳足跡資料回覆。</p><span class="go"><i>→</i>詢價與索取資料</span></a>
+ <a class="sell" href="#finale"><span class="who">FOR SUPPLIERS</span><h3>有廢鋁要出售？</h3><p>新格為 ISRI 與 BIR 會員，全球收購各類廢鋁與廢鋅。查看收購規格與合作流程。</p><span class="go"><i>→</i>原料收購</span></a>
+</div>
+
+<section class="finale" id="finale">
+ <div class="wrap">
+  <p class="kicker reveal">RECYCLING FOR A BETTER TOMORROW</p>
+  <h2 class="reveal d1">下一個產品，<br><span class="grad">從回收開始。</span></h2>
+  <a class="btn hot reveal d2" href="#">聯絡業務團隊 →</a>
+ </div>
+</section>
+
+<footer><div class="wrap"><span>© SIGMA 新格集團</span><span>方案 A 概念稿 v2 · 圖片為圖庫示意照，非新格實拍 · 標示「待確認」者為示意數字</span></div></footer>
+
+<script>
+(()=>{
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ // sparks
+ const sp=document.getElementById('sparks');
+ if(!reduce)for(let i=0;i<28;i++){const s=document.createElement('span');s.style.left=(40+Math.random()*60)+'%';s.style.setProperty('--dx',(Math.random()*160-80)+'px');s.style.animationDuration=(5+Math.random()*7)+'s';s.style.animationDelay=(Math.random()*8)+'s';sp.appendChild(s)}
+ // live counter: 300,000 t/yr ≈ 9.51 kg/s
+ const live=document.getElementById('live'),t0=performance.now(),rate=300e6/31536000;
+ const tick=()=>{live.textContent=((performance.now()-t0)/1000*rate).toLocaleString('zh-TW',{minimumFractionDigits:1,maximumFractionDigits:1});requestAnimationFrame(tick)};tick();
+ // header + progress
+ const hdr=document.getElementById('hdr'),pb=document.getElementById('progress');
+ const onScroll=()=>{hdr.classList.toggle('solid',scrollY>40);pb.style.width=(scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+'%'};
+ addEventListener('scroll',onScroll,{passive:true});onScroll();
+ // reveal + counters
+ const count=el=>{const end=+el.dataset.count,from=end>1000?end-60:0,st=performance.now(),small=el.querySelector('small');
+  const f=n=>{const p=Math.min(1,(n-st)/1600),v=Math.round(from+(end-from)*(1-Math.pow(1-p,3)));el.firstChild.textContent=v;if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)};
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');e.target.querySelectorAll('[data-count]').forEach(count);io.unobserve(e.target)}),{threshold:.18});
+ document.querySelectorAll('.reveal,#network').forEach(el=>io.observe(el));
+ // ring
+ const N=5,R=160,C=2*Math.PI*R,g=document.getElementById('nodes'),prog=document.getElementById('prog');
+ const nodes=[...Array(N)].map((_,i)=>{const a=-Math.PI/2+i*2*Math.PI/N,c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',R*Math.cos(a));c.setAttribute('cy',R*Math.sin(a));c.setAttribute('r',11);c.setAttribute('class','node');g.appendChild(c);return c});
+ const steps=[...document.querySelectorAll('.step')],rn=document.getElementById('ringN'),rt=document.getElementById('ringT');
+ const setStep=i=>{steps.forEach((s,j)=>s.classList.toggle('on',j===i));nodes.forEach((n,j)=>n.classList.toggle('on',j<=i));prog.style.strokeDashoffset=C*(1-(i+1)/N);rn.textContent='0'+(i+1);rt.textContent=steps[i].dataset.t};
+ const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setStep(steps.indexOf(e.target))}),{rootMargin:'-45% 0px -45% 0px'});
+ steps.forEach(s=>so.observe(s));setStep(0);
+ // dotted grid
+ const d=document.getElementById('dots');let h='';for(let x=244;x<930;x+=8)for(let y=74;y<230;y+=8)h+=`<circle cx="${x}" cy="${y}" r="1"/>`;d.innerHTML=h;
+ // product tilt
+ if(!reduce)document.querySelectorAll('.prod').forEach(p=>{p.addEventListener('mousemove',e=>{const r=p.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;p.style.transform=`perspective(900px) rotateY(${x*8}deg) rotateX(${-y*8}deg)`});p.addEventListener('mouseleave',()=>p.style.transform='')});
+})();
+</script>
+</body>
+</html>
